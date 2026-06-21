@@ -31,14 +31,25 @@ class $modify(EIBLevelCell, LevelCell) {
         auto demon = ExtremesInBetween::demonForLevel(level->m_levelID.value());
         if (!demon) return;
 
-        auto sprite = static_cast<CCSprite*>(difficultyContainer->getChildByID("hiimjustin000.demons_in_between/between-difficulty-sprite"));
-        if (!sprite) return;
-
         auto difficultySprite = static_cast<GJDifficultySprite*>(difficultyContainer->getChildByID("difficulty-sprite"));
         if (!difficultySprite) return;
 
-        sprite->setDisplayFrame(CCSpriteFrameCache::get()->spriteFrameByName(
-            fmt::format("DIB_{:02d}_btn_001.png"_spr, demon->difficulty).c_str()));
-        sprite->setPosition(difficultySprite->getPosition() + CCPoint { 0.25f, -0.75f });
+        if (auto sprite = static_cast<CCSprite*>(difficultyContainer->getChildByID("hiimjustin000.demons_in_between/between-difficulty-sprite"))) {
+            sprite->setDisplayFrame(CCSpriteFrameCache::get()->spriteFrameByName(
+                fmt::format("DIB_{:02d}_btn_001.png"_spr, demon->difficulty).c_str()));
+            sprite->setPosition(difficultySprite->getPosition() + CCPoint { 0.25f, -0.75f });
+        }
+        else {
+            auto grdDifficulty = difficultyContainer->getChildByID("grd-difficulty");
+            if (!grdDifficulty) return;
+
+            sprite = CCSprite::createWithSpriteFrameName(fmt::format("DIB_{:02d}_btn_001.png"_spr, demon->difficulty).c_str());
+            sprite->setPosition(difficultySprite->getPosition() + CCPoint { 0.25f, -0.75f });
+            sprite->setID("hiimjustin000.demons_in_between/between-difficulty-sprite");
+            difficultyContainer->addChild(sprite, 3);
+
+            grdDifficulty->setVisible(false);
+            if (auto grdInfinity = difficultyContainer->getChildByID("grd-infinity")) grdInfinity->setVisible(false);
+        }
     }
 };

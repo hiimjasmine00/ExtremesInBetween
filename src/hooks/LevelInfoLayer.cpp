@@ -46,6 +46,18 @@ class $modify(EIBLevelInfoLayer, LevelInfoLayer) {
                 fmt::format("DIB_{:02d}_btn2_001.png"_spr, demon->difficulty).c_str()));
             sprite->setPosition(sprite->getPosition() + CCPoint { 0.25f, 2.75f });
         }
+        else {
+            auto grdDifficulty = getChildByID("grd-difficulty");
+            if (!grdDifficulty) return true;
+
+            sprite = CCSprite::createWithSpriteFrameName(fmt::format("DIB_{:02d}_btn2_001.png"_spr, demon->difficulty).c_str());
+            sprite->setPosition(sprite->getPosition() + CCPoint { 0.25f, 2.75f });
+            sprite->setID("hiimjustin000.demons_in_between/between-difficulty-sprite");
+            addChild(sprite, 3);
+
+            grdDifficulty->setVisible(false);
+            if (auto grdInfinity = getChildByID("grd-infinity")) grdInfinity->setVisible(false);
+        }
 
         return true;
     }
