@@ -1,0 +1,42 @@
+{
+    "geode": "5.7.1",
+    "gd": {
+        "android": "2.2081",
+        "win": "2.2081",
+        "mac": "2.2081",
+        "ios": "2.2081"
+    },
+    "version": "v1.0.0",
+    "id": "hiimjasmine00.extremes_in_between",
+    "name": "Extremes In Between",
+    "developer": "hiimjasmine00",
+    "description": "Expanded extreme demon difficulties.",
+    "dependencies": {
+        "geode.node-ids": ">=v1.1.0",
+        "hiimjustin000.demons_in_between": ">=v1.5.0"
+    },
+    "resources": {
+        "spritesheets": {
+            "EIB_IconSheet": [
+                "resources/IconSheet/*.png"
+            ],
+            "EIB_LongSheet": [
+                "resources/LongSheet/*.png"
+            ],
+            "EIB_ShortSheet": [
+                "resources/ShortSheet/*.png"
+            ]
+        }
+    },
+    "links": {
+        "community": "https://discord.gg/QVKmbvBXA7",
+        "source": "https://github.com/hiimjasmine00/ExtremesInBetween",
+        "homepage": "https://www.hiimjasmine00.com"
+    },
+    "tags": [
+        "content",
+        "enhancement",
+        "interface",
+        "online"
+    ]
+}
