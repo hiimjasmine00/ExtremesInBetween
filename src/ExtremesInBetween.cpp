@@ -1,6 +1,5 @@
 #include "ExtremesInBetween.hpp"
 #include <Geode/loader/GameEvent.hpp>
-#include <Geode/ui/Notification.hpp>
 #include <jasmine/mod.hpp>
 #include <jasmine/string.hpp>
 #include <jasmine/web.hpp>
@@ -14,12 +13,7 @@ $on_game(Loaded) {
     spawn(
         web::WebRequest().get("https://docs.google.com/spreadsheets/d/1qKlWKpDkOpU1ZF6V6xGfutDY2NvcA8MNPnsv6GBkKPQ/gviz/tq?tqx=out:csv&sheet=GDDL"),
         [](web::WebResponse res) {
-            if (!res.ok()) {
-                auto errorString = fmt::format("Failed to fetch extreme GDDL data: HTTP {}", res.code());
-                log::error("{}", errorString);
-                Notification::create(errorString, NotificationIcon::Error)->show();
-                return;
-            }
+            if (!res.ok()) return log::error("Failed to fetch extreme GDDL data: HTTP {}", res.code());
 
             constexpr std::array difficulties = {
                 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 11, 12, 13, 14, 14, 15, 15, 16, 17, 18, 19, 20,
@@ -55,9 +49,21 @@ $on_game(Loaded) {
                 if (demon.id > 0 && demon.difficulty > 20) ExtremesInBetween::gddl.emplace(demon.id, demon);
             }
 
-            auto successString = fmt::format("Loaded extreme GDDL data with {} demons", ExtremesInBetween::gddl.size());
-            log::info("{}", successString);
-            Notification::create(successString, NotificationIcon::Success)->show();
+            log::info("Loaded extreme GDDL data with {} demons", ExtremesInBetween::gddl.size());
+
+            spawn(web::WebRequest().get("https://api.aredl.net/v2/api/aredl/levels"), [](web::WebResponse res) {
+                if (!res.ok()) return log::error("Failed to fetch AREDL data: HTTP {}", res.code());
+
+                auto arr = jasmine::web::getArray(res);
+                if (arr.empty()) return log::error("Failed to fetch AREDL data: Empty response");
+
+                auto id = arr[0].get<int>("level_id");
+                if (!id.isOk()) return log::error("Failed to fetch AREDL data: Unexpected response format");
+
+                if (auto it = ExtremesInBetween::gddl.find(id.unwrap()); it != ExtremesInBetween::gddl.end()) it->second.difficulty = 30;
+
+                log::info("Loaded AREDL data");
+            });
         }
     );
 }
