@@ -44,14 +44,14 @@ class $modify(EIBLevelInfoLayer, LevelInfoLayer) {
         if (auto sprite = static_cast<CCSprite*>(getChildByID("hiimjustin000.demons_in_between/between-difficulty-sprite"))) {
             sprite->setDisplayFrame(CCSpriteFrameCache::get()->spriteFrameByName(
                 fmt::format("DIB_{:02d}_btn2_001.png"_spr, demon->difficulty).c_str()));
-            sprite->setPosition(sprite->getPosition() + CCPoint { 0.25f, 2.75f });
+            sprite->setPosition(m_difficultySprite->getPosition() + CCPoint { 0.25f, 30.0f - sprite->getContentSize().height / 2.0f });
         }
-        else {
+        else if (Loader::get()->getInstalledMod("hiimjustin000.demons_in_between")->getSettingValue<bool>("enable-difficulties")) {
             auto grdDifficulty = getChildByID("grd-difficulty");
             if (!grdDifficulty) return true;
 
             sprite = CCSprite::createWithSpriteFrameName(fmt::format("DIB_{:02d}_btn2_001.png"_spr, demon->difficulty).c_str());
-            sprite->setPosition(sprite->getPosition() + CCPoint { 0.25f, 2.75f });
+            sprite->setPosition(m_difficultySprite->getPosition() + CCPoint { 0.25f, 30.0f - sprite->getContentSize().height / 2.0f });
             sprite->setID("hiimjustin000.demons_in_between/between-difficulty-sprite");
             addChild(sprite, 3);
 
