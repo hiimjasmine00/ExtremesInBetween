@@ -1,11 +1,4 @@
-#include <map>
-
-struct LadderDemon {
-    int id = 0;
-    double tier = 0.0;
-    double enjoyment = 0.0;
-    int difficulty = 0;
-};
+#include <hiimjustin000.demons_in_between/include/DemonsInBetweenAPI.hpp>
 
 namespace ExtremesInBetween {
     extern std::map<int, LadderDemon> gddl;

@@ -1,19 +1,19 @@
 {
-    "geode": "5.7.1",
+    "geode": "5.8.2",
     "gd": {
         "android": "2.2081",
         "win": "2.2081",
         "mac": "2.2081",
         "ios": "2.2081"
     },
-    "version": "v1.0.1",
+    "version": "v1.0.2",
     "id": "hiimjasmine00.extremes_in_between",
     "name": "Extremes In Between",
     "developer": "hiimjasmine00",
     "description": "Expanded extreme demon difficulties.",
     "dependencies": {
         "geode.node-ids": ">=v1.1.0",
-        "hiimjustin000.demons_in_between": ">=v1.5.0"
+        "hiimjustin000.demons_in_between": ">=v1.6.0"
     },
     "resources": {
         "spritesheets": {
